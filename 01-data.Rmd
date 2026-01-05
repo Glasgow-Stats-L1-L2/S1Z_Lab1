@@ -1,6 +1,6 @@
 # Introducing The Data {-}
 
-In this lab, we will explore and visualise the data using the `tidyverse` suite of packages and perform statistical inference.
+In this first lab, we will explore and visualise the data using the `tidyverse` suite of packages and perform statistical inference.
 
 We will be looking at data from the Youth Risk Behaviour Surveillance System (YRBSS) survey, which uses data from American high school students to help discover health patterns. The data frame is called `yrbss` and is part of the `openintro` package should you wish to look at it yourself.
 
