@@ -202,3 +202,128 @@ Consider whether the interval contains a certain vital number.
 
 <br>
 
+`r hide("Optional: harder task!")`
+This is a harder task for those who would like some more challenging coding. It will not be covered during the lab, but feel free to go through it in your own time. 
+
+Create a function that takes as input two values of `race` and returns a list containing:
+
+• the confidence intervals for the average height of people of those ethnicities.
+
+• whether the two intervals overlap. 
+
+To create a function you can use the line of command `function(){}` , specifying the function arguments in the round brackets and the code in the curly brackets. Add a new line with `return()` at the end to specify what to output.
+
+Try it in your own time, and when you're ready check the solution.
+
+**Solution**
+
+Start by creating an empty function that takes as arguments `race1` and `race2`. When we call the function after having defined it, we can specify any ethincities for these arguments and the function will output the respective confidence interval. 
+
+```{r optional_solution, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn<- function(race1, race2){
+
+}
+```
+
+Let's deal with the first ethnicity. Create a first new dataset, called `data_1` containing only observations where `race` is equal to the first specified race. Using the number of observations in this new dataset we can compute the new degrees of freedom.
+
+Compute the Confidence interval as usual on this dataset. 
+
+```{r optional_solution2, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn<- function(race1, race2){
+  
+  data_1<- yrbss %>% filter(race==race1) 
+  df_1<- nrow(data_1) - 1
+  
+  mean_1<- mean(df_1$height)
+  se_1<- sqrt(var(df_1$height))/sqrt(nrow(data_1))
+  lb_1<- mean_1 - qt(0.975, df_1)*se_1
+  ub_1<- mean_1 + qt(0.975, df_1)*se_1
+  
+}
+```
+
+Now repeat the process for the value `race2`. 
+
+```{r optional_solution3, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn<- function(race1, race2){
+  
+  data_1<- yrbss %>% filter(race==race1) 
+  df_1<- nrow(data_1) - 1
+  
+  mean_1<- mean(data_1$height)
+  se_1<- sqrt(var(data_1$height))/sqrt(nrow(data_1))
+  lb_1<- mean_1 - qt(0.975, df_1)*se_1
+  ub_1<- mean_1 + qt(0.975, df_1)*se_1
+  
+  data_2<- yrbss %>% filter(race==race2) 
+  df_2<- nrow(data_2) - 1
+  
+  mean_2<- mean(data_2$height)
+  se_2<- sqrt(var(data_2$height))/sqrt(nrow(data_2))
+  lb_2<- mean_2 - qt(0.975, df_2)*se_2
+  ub_2<- mean_2 + qt(0.975, df_2)*se_2
+  
+}
+```
+
+Now, check if the two intervals overlap. 
+
+```{r optional_solution4, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn<- function(race1, race2){
+  
+  data_1<- yrbss %>% filter(race==race1) 
+  df_1<- nrow(data_1) - 1
+  
+  mean_1<- mean(data_1$height)
+  se_1<- sqrt(var(data_1$height))/sqrt(nrow(data_1))
+  lb_1<- mean_1 - qt(0.975, df_1)*se_1
+  ub_1<- mean_1 + qt(0.975, df_1)*se_1
+  
+  data_2<- yrbss %>% filter(race==race2) 
+  df_2<- nrow(data_2) - 1
+  
+  mean_2<- mean(data_2$height)
+  se_2<- sqrt(var(data_2$height))/sqrt(nrow(data_2))
+  lb_2<- mean_2 - qt(0.975, df_2)*se_2
+  ub_2<- mean_2 + qt(0.975, df_2)*se_2
+  
+  overlap<- ifelse(ub_2>=lb_1|lb_2<= ub_1,"yes", "no")
+  
+}
+```
+
+Lastly, specify what should be returned. 
+
+```{r optional_solution5, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn<- function(race1, race2){
+  
+  data_1<- yrbss %>% filter(race==race1) 
+  df_1<- nrow(data_1) - 1
+  
+  mean_1<- mean(data_1$height)
+  se_1<- sqrt(var(data_1$height))/sqrt(nrow(data_1))
+  lb_1<- mean_1 - qt(0.975, df_1)*se_1
+  ub_1<- mean_1 + qt(0.975, df_1)*se_1
+  
+  data_2<- yrbss %>% filter(race==race2) 
+  df_2<- nrow(data_2) - 1
+  
+  mean_2<- mean(data_2$height)
+  se_2<- sqrt(var(data_2$height))/sqrt(nrow(data_2))
+  lb_2<- mean_2 - qt(0.975, df_2)*se_2
+  ub_2<- mean_2 + qt(0.975, df_2)*se_2
+  
+  test<- (ub_2>=lb_1&lb_2<=lb_1)|(lb_2<= ub_1&ub_2>=ub_1)
+  overlap_res<- ifelse(test,"yes", "no")
+  
+  return(list(ci1= c(lb_1,ub_1), ci2= c(lb_2,ub_2), overlap=overlap_res))
+}
+```
+
+Now let's try our function. 
+
+```{r optional_solution6, webex.hide="Solution", echo=TRUE, eval=TRUE}
+height_per_ethn( "Black or African American",  "White")
+```
+`r unhide()`
